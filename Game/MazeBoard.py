@@ -1,4 +1,4 @@
-from Game import PosHandler
+from Game.PosHandler import Point
 import random
 import time
 class Board:
@@ -27,45 +27,49 @@ class BoardGame(Board):
 
     def __genBoard(self):
         random.seed(time.time())
-        tcount = 1
         y = 0
-        self.__mazePoints.append((random.randint(0, self._Board__dim), y))
-        current = self.__mazePoints[0]
+        i = 0
+        xp = random.randint(0, self._Board__dim-1)
+        self.__mazePoints.append((xp, y))
+        #current = self.__mazePoints[0]
 
-        while y < self._Board__dim:
-            i = 0
+        while y < self._Board__dim-1:
             random.seed(time.time())
             direction = random.randint(0, 4)
-            if direction == 0 and current[1] < self._Board__dim: #up
+            print(direction)
+            current = self.__mazePoints[i]
+            if direction == 0 and y+1 < self._Board__dim and self.__mazePoints[i-1] != (current[0], current[1]+1): #up
                 self.__mazePoints.append(
                     (current[0], current[1]+1)
                 )
                 y += 1
-                current = self.__mazePoints[i+1]
                 i += 1
-            elif direction == 1 and current[1] != 0 and self.__mazePoints[i][1] != current[1]-1: #down, y is not 0, and is not equal to the point before
+                continue
+            elif direction == 1 and y != 0 and self.__mazePoints[i-1][1] != current[1]-1: #down, y is not 0, and is not equal to the point before
                 self.__mazePoints.append(
                     (current[0], current[1]-1)
                 )
                 y -= 1
-                current = self.__mazePoints[i+1]
                 i += 1
-            elif direction == 2 and self.__mazePoints[i][0] != current[0]-1: #left, current x is not next x
+                continue
+            elif direction == 2 and xp != 0 and self.__mazePoints[i-1] != (current[0]-1, current[1]):
+                #randomDirection == Direction.LEFT && prevX - 1 >= 0 && board[y][prevX - 1].equals("-")
+                #left, current x is not next x
                 self.__mazePoints.append(
                     (current[0]-1, current[1])
                 )
-                current = self.__mazePoints[i+1]
+                xp -= 1
                 i += 1
-            elif direction == 3 and current[0] < self._Board__dim:
+                continue
+            elif direction == 3 and xp+1 < self._Board__dim:
                 self.__mazePoints.append(
                     (current[0]+1, current[1])
                 )
-                current = self.__mazePoints[i+1]
+                xp += 1
                 i += 1
+                continue
             else:
                 continue
-            print(direction)
-
 
     def __str__(self):
         return str(self.__mazePoints)

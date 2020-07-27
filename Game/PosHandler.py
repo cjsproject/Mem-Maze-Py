@@ -1,5 +1,5 @@
 class Point:
-    def __init__(self, x, y, step=0):
+    def __init__(self, x, y, step=None):
         self.__coord = (x, y)
         self.__step = step
 
