@@ -1,8 +1,9 @@
 from Game.PosHandler import Point
 import random
-import time
+from time import time
 class Board:
-    def __init__(self, dim=6):
+    def __init__(self, dim=10):
+        random.seed(time())
         self.__dim = dim
         self.__board = [[(x, y) for x in range(dim)] for y in range(dim)]
 
@@ -26,7 +27,6 @@ class BoardGame(Board):
 
 
     def __genBoard(self):
-        random.seed(time.time())
         y = 0
         i = 0
         xp = random.randint(0, self._Board__dim-1)
@@ -34,7 +34,7 @@ class BoardGame(Board):
         #current = self.__mazePoints[0]
 
         while y < self._Board__dim-1:
-            random.seed(time.time())
+            random.seed(time())
             direction = random.randint(0, 3)
             print(direction)
             current = self.__mazePoints[i]
@@ -82,85 +82,8 @@ class BoardGame(Board):
         return "Maze Points: " + str(self.__mazePoints)
 
 
-x = BoardGame()
+#x = BoardGame()
 
 #print("\n",x._BoardGame__mazePoints[0], x._BoardGame__mazePoints[0][0]+1, sep='\t')
-print(x)
+#print(x)
 
-
-
-
-"""
-    private void generateBoard() {
-
-        Random rand = new Random();
-        int tileCount = 1;
-        int y = 0;
-        int prevX = rand.nextInt(board.length - 1);
-        Direction[] directionChoices = {
-                Direction.DOWN,
-                Direction.LEFT,
-                Direction.RIGHT
-        };
-        boardPoints.add(new Point(prevX,y, tileCount));
-        board[y][prevX] = tileCount++ + "";
-        while (y < board.length) {
-            boolean directionFound = false;
-            while (!directionFound) {
-                Direction randomDirection = directionChoices[rand.nextInt(directionChoices.length)];
-                if (randomDirection == Direction.LEFT && prevX - 1 >= 0 && board[y][prevX - 1].equals("-")) {
-                    board[y][prevX - 1] = tileCount + "";
-                    boardPoints.add(new Point(prevX-1,y, tileCount));
-                    prevX -= 1;
-                    tileCount++;
-                    directionFound = true;
-                } else if (randomDirection == Direction.RIGHT && prevX + 1 < board.length && board[y][prevX + 1].equals("-")) {
-                    board[y][prevX + 1] = tileCount + "";
-                    boardPoints.add(new Point(prevX+1,y, tileCount));
-                    prevX += 1;
-                    tileCount++;
-                    directionFound = true;
-                } else if (randomDirection == Direction.DOWN) {
-                    if (y + 1 >= board.length) {
-                        y++;
-                        break;
-                    }
-                    board[++y][prevX] = tileCount + "";
-                    boardPoints.add(new Point(prevX,y, tileCount));
-                    tileCount++;
-                    directionFound = true;
-                }
-                if (y + 1 >= board.length) {
-                    y++;
-                    break;
-                }
-            }
-        }
-    }
-
-    public ArrayList<Point> getBoardPoints() {
-        return boardPoints;
-    }
-
-    public void setBoardPoints(ArrayList<Point> x){
-        boardPoints = x;
-    }
-
-    public int getPlayerTileCount() {
-        return playerTileCount;
-    }
-
-    public void setPlayerTileCount(int playerTileCount) {
-        this.playerTileCount = playerTileCount;
-    }
-
-
-/*    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-    }*/
-}
-"""
