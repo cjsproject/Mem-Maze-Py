@@ -1,4 +1,4 @@
-#from Game import MazeBoard
+from Game import MazeBoard
 
 import tkinter as tk
 
@@ -14,7 +14,8 @@ def create_grid(event=None):
 
     # Inserts Circles for Maze
     for i in range(0, w, 50):
-        c.create_oval([(0, 0), (i, 50)])
+        for j in range(0, w, 50):
+            c.create_oval([(j, i+50), (50+j, i)])
     #   c.create_oval([(0, i+50), (i, 50)])
 
 root = tk.Tk()
