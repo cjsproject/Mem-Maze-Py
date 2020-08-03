@@ -91,7 +91,7 @@ class BoardGame(Board):
         return "Maze Points: " + str(self.__mazePoints)
 
 
-d = BoardGame()
+#d = BoardGame()
 
-print(d)
+#print(d)
 #print("\n",d._BoardGame__mazePoints[0], d._BoardGame__mazePoints[0][1]+1, sep='\t')
