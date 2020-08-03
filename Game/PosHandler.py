@@ -17,3 +17,6 @@ class Point:
 
     def getstep(self):
         return self.__step
+
+    def __str__(self):
+        return str(self.__coord)

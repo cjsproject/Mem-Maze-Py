@@ -1,4 +1,4 @@
-from Game import MazeBoard
+#from Game import MazeBoard
 
 import tkinter as tk
 
