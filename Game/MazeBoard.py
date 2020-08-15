@@ -55,7 +55,7 @@ class BoardGame(Board):
                     current[0] - 1, current[1]) in self.__mazePoints and (
                     current[0], current[1] - 1) in self.__mazePoints and (
                     current[0], current[1] + 1) in self.__mazePoints:
-                del self.__mazePoints[1:-1]
+                del self.__mazePoints[1:]
                 current = self.__mazePoints[0]
                 self.x = 0
                 self.y = 0
