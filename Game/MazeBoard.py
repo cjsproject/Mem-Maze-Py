@@ -61,12 +61,12 @@ class BoardGame(Board):
                 self.y = 0
             elif (current[0] + 1, current[1]) in self.__mazePoints and (
                     current[0] - 1, current[1]) in self.__mazePoints and self.y == 0:
-                del self.__mazePoints[1:-1]
+                del self.__mazePoints[1:]
                 self.x = 0
                 self.y = 0
             elif (current[0], current[1] - 1) in self.__mazePoints and (
                     current[0], current[1] + 1) in self.__mazePoints and self.x == 0 or self.x == 9:
-                del self.__mazePoints[1:-1]
+                del self.__mazePoints[1:]
                 current = self.__mazePoints[0]
                 self.x = 0
                 self.y = 0
