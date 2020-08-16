@@ -13,6 +13,12 @@ class Board:
 
     #def won(self): return False
 
+    def getDim(self):
+        return self.__dim
+
+    def getBoard(self):
+        return self.__board
+
 
 class BoardGame(Board):
     x = 0
@@ -22,6 +28,9 @@ class BoardGame(Board):
         super().__init__()
         self.__mazePoints = []
         self.__genBoard()
+
+    def solution(self):
+        return self.__mazePoints
 
     def up(self):
         self.y += 1
@@ -50,7 +59,7 @@ class BoardGame(Board):
             direction = random.randrange(4)
             print(direction)
             current = self.__mazePoints[-1]
-            # if all possible next points are in mazepoints already, backtrack and direction
+            # if all possible next points are in mazepoints already, backtrack and regen maze
             if (current[0] + 1, current[1]) in self.__mazePoints and (
                     current[0] - 1, current[1]) in self.__mazePoints and (
                     current[0], current[1] - 1) in self.__mazePoints and (
@@ -59,11 +68,13 @@ class BoardGame(Board):
                 current = self.__mazePoints[0]
                 self.x = 0
                 self.y = 0
+            # case: stuck on 0 vertical axis, with both horizontal points already in mazepoints
             elif (current[0] + 1, current[1]) in self.__mazePoints and (
                     current[0] - 1, current[1]) in self.__mazePoints and self.y == 0:
                 del self.__mazePoints[1:]
                 self.x = 0
                 self.y = 0
+            # stuck on max horizontal axis, both vertical movements already in mazepoints
             elif (current[0], current[1] - 1) in self.__mazePoints and (
                     current[0], current[1] + 1) in self.__mazePoints and self.x == 0 or self.x == 9:
                 del self.__mazePoints[1:]
@@ -71,6 +82,7 @@ class BoardGame(Board):
                 self.x = 0
                 self.y = 0
 
+            # random direction functions, next point cannot be a part of mazepoints alredy, reduces redundancy
             if direction == 0 and self.y + 1 < length and (current[0], current[1] + 1) not in self.__mazePoints:
                 self.up()
             elif direction == 1 and self.y > 0 and (current[0], current[1] - 1) not in self.__mazePoints:
