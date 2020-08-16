@@ -4,22 +4,6 @@ import tkinter as tk
 from time import sleep
 
 
-def create_d_grid(event=None):
-    w = d.winfo_width() # Get current width of canvas
-    h = d.winfo_height() # Get current height of canvas
-    d.delete('grid_line') # Will only remove the grid_line
-
-    # Creates all vertical lines at intervals of 100
-    for i in range(0, w, 35):
-        d.create_line([(i, 0), (i, h)], tag='grid_line')
-        d.create_line([(0, i), (w, i)], tag='grid_line')
-
-    # Inserts Circles for Maze
-    for i in range(0, w, 35):
-        for j in range(0, w, 35):
-            d.create_oval([(j, i+35), (35+j, i)], fill='blue')
-
-
 def create_c_grid(event=None):
     w = c.winfo_width() # Get current width of canvas
     h = c.winfo_height() # Get current height of canvas
@@ -29,12 +13,12 @@ def create_c_grid(event=None):
     mp = x.solution()
 
     # Creates all vertical lines at intervals of 100
-    for i in range(0, w, 35):
+    for i in range(0, w, step):
         c.create_line([(i, 0), (i, h)], tag='grid_line')
         c.create_line([(0, i), (w, i)], tag='grid_line')
 
     # Inserts Circles for Maze, used list comprehension for simple access later
-    circles = [[c.create_oval([(j, i+35), (35+j, i)]) for i in range(0, w, 35)] for j in range(0, w, 35)]
+    circles = [[c.create_oval([(j, i + step), (step + j, i)], fill='#c3bbec', activeoutline='red') for i in range(0, w, step)] for j in range(0, w, step)]
     horiz = 0
     vert = 0
 
@@ -44,11 +28,12 @@ def create_c_grid(event=None):
         for j in i:
             if j in mp:
                 print("(", mp.index(j) + 1, ")", end='\t')
-                c.itemconfigure(circles[horiz][vert], fill='green') # item configure the actual canvas object in circles list
+                c.itemconfigure(circles[horiz][vert], fill='#0bcd74')  # item configure the actual canvas object in circles list, light green
+                c.create_text(horiz * step + step//2, vert * step + step//2, text=str(mp.index(j) + 1))
             else:
                 print(j, end='\t')
             horiz += 1
-            c.update()
+            #c.update()
         vert += 1
         print()
 
@@ -64,18 +49,13 @@ root.title("Memory Maze")
 label1 = tk.Label(root, text="c grid")
 label1.pack()#packs in order of compilation, label first, then grid
 
+length = 500
+step = length//x.getDim()
 
-c = tk.Canvas(root, height=350, width=350, bg='white')
+c = tk.Canvas(root, height=length, width=length, bg='#fdffb4')
 c.pack(fill=tk.BOTH, expand=True)
 
 c.bind('<Configure>', create_c_grid)
-
-label2 = tk.Label(root, text="d grid")
-label2.pack()
-d = tk.Canvas(root, height=350, width=350, bg='white')
-d.pack(fill=tk.BOTH, expand=True)
-
-d.bind('<Configure>', create_d_grid)
 
 root.resizable(0, 0)
 root.mainloop()
